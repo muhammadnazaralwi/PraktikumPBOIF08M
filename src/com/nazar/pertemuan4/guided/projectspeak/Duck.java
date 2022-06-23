@@ -8,7 +8,7 @@ package com.nazar.pertemuan4.guided.projectspeak;
  *
  * @author alwi
  */
-public class Duck extends Mammal{
+public class Duck extends Mammal {
     public void speak(){
         System.out.println("Quack! Quack!");
     }
