@@ -292,8 +292,8 @@ public class FormKoneksi extends javax.swing.JFrame {
     private static Connection bukaKoneksi() {
         if (koneksi==null) {
             try {
-                String user="praktikumpbo";
-                String password="praktikumpbo340";
+                String user="praktikumadmin";
+                String password="praktikumadmin340";
                 String url="jdbc:mysql://irfan340.xyz:3306/praktikumpbo"; 
           
                 

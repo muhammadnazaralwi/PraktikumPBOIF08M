@@ -1,0 +1,4 @@
+name: mysqltest
+recipe: lamp
+config:
+  webroot: .
