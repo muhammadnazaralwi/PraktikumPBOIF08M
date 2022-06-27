@@ -199,6 +199,13 @@ public class FormKoneksi extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTeleponActionPerformed
 
+    private void clearContentFilledByUser() {
+        this.lblKode.setText("0");
+        this.txtNama.setText("");
+        this.txtAlamat.setText("");
+        this.txtTelepon.setText("");
+    }
+    
     private void cmbAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAddActionPerformed
         // TODO add your handling code here:
         Connection c = bukaKoneksi();
@@ -208,10 +215,6 @@ public class FormKoneksi extends javax.swing.JFrame {
             this.cmbEdit.setText("Cancel");
             this.cmbDelete.enable(false);
             this.cmbRefresh.enable(false);
-            this.lblKode.setText("0");
-//            this.txtNama.setText("");
-//            this.txtAlamat.setText("");
-//            this.txtTelepon.setText("");
         } else if ("Save".equals(this.cmbAdd.getText())) {
             String sqlKode = "INSERT INTO anggota (nama, alamat, tlp) " 
                     + "values ('" + this.txtNama.getText() + "',"
@@ -222,6 +225,8 @@ public class FormKoneksi extends javax.swing.JFrame {
                 PreparedStatement p2 = (PreparedStatement) c.prepareStatement(sqlKode);
                 p2.executeUpdate();
                 p2.close();
+                
+                clearContentFilledByUser();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan " + ex.getMessage());
             }
@@ -239,6 +244,8 @@ public class FormKoneksi extends javax.swing.JFrame {
                 PreparedStatement p2 = (PreparedStatement) c.prepareStatement(sqlKode);
                 p2.executeUpdate();
                 p2.close();
+                
+                clearContentFilledByUser();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan " + ex.getMessage());
             }
@@ -287,6 +294,7 @@ public class FormKoneksi extends javax.swing.JFrame {
     private void cmbRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRefreshActionPerformed
         // TODO add your handling code here:
         ambilDataTable();
+        clearContentFilledByUser();
     }//GEN-LAST:event_cmbRefreshActionPerformed
 
     private static Connection bukaKoneksi() {
