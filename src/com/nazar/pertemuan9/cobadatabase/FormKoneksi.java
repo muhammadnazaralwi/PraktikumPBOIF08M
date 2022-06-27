@@ -296,7 +296,7 @@ public class FormKoneksi extends javax.swing.JFrame {
                 String user="root";
                 String password="";
                 
-                DriverManager.registerDriver(new com.mysql.jdbc.Driver()); 
+                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver()); 
                 koneksi = DriverManager.getConnection(url,user,password);
             } catch (SQLException t) {
                 System.out.println("Error membuat koneksi");
