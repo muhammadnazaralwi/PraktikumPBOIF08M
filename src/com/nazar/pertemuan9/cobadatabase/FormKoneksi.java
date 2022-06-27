@@ -199,11 +199,12 @@ public class FormKoneksi extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTeleponActionPerformed
 
-    private void clearContentFilledByUser() {
+    private void backIntoDefaultState() {
         this.lblKode.setText("0");
         this.txtNama.setText("");
         this.txtAlamat.setText("");
         this.txtTelepon.setText("");
+        this.cmbAdd.setEnabled(true);
     }
     
     private void cmbAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAddActionPerformed
@@ -226,7 +227,7 @@ public class FormKoneksi extends javax.swing.JFrame {
                 p2.executeUpdate();
                 p2.close();
                 
-                clearContentFilledByUser();
+                backIntoDefaultState();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan " + ex.getMessage());
             }
@@ -245,7 +246,7 @@ public class FormKoneksi extends javax.swing.JFrame {
                 p2.executeUpdate();
                 p2.close();
                 
-                clearContentFilledByUser();
+                backIntoDefaultState();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan " + ex.getMessage());
             }
@@ -267,6 +268,7 @@ public class FormKoneksi extends javax.swing.JFrame {
         if ("Edit".equals(this.cmbEdit.getText())) {
             this.cmbAdd.setText("Update");
             this.cmbEdit.setText("Cancel");
+            this.cmbAdd.setEnabled(true);
             this.cmbDelete.setEnabled(false);
             this.cmbRefresh.setEnabled(false);
         } else if ("Cancel".equals(this.cmbEdit.getText())) {
@@ -294,7 +296,7 @@ public class FormKoneksi extends javax.swing.JFrame {
     private void cmbRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRefreshActionPerformed
         // TODO add your handling code here:
         ambilDataTable();
-        clearContentFilledByUser();
+        backIntoDefaultState();
     }//GEN-LAST:event_cmbRefreshActionPerformed
 
     private static Connection bukaKoneksi() {
@@ -351,6 +353,8 @@ public class FormKoneksi extends javax.swing.JFrame {
         this.txtAlamat.setText(alamat);
         String tlp = (String) model.getValueAt(i, 3); 
         this.txtTelepon.setText(tlp);
+        
+        this.cmbAdd.setEnabled(false);
     }
     
     /**
