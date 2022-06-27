@@ -213,8 +213,8 @@ public class FormKoneksi extends javax.swing.JFrame {
         if ("Add".equals(this.cmbAdd.getText())) {
             this.cmbAdd.setText("Save");
             this.cmbEdit.setText("Cancel");
-            this.cmbDelete.enable(false);
-            this.cmbRefresh.enable(false);
+            this.cmbDelete.setEnabled(false);
+            this.cmbRefresh.setEnabled(false);
         } else if ("Save".equals(this.cmbAdd.getText())) {
             String sqlKode = "INSERT INTO anggota (nama, alamat, tlp) " 
                     + "values ('" + this.txtNama.getText() + "',"
@@ -233,8 +233,8 @@ public class FormKoneksi extends javax.swing.JFrame {
             
             this.cmbAdd.setText("Add");
             this.cmbEdit.setText("Edit");
-            this.cmbDelete.enable(true);
-            this.cmbRefresh.enable(true);
+            this.cmbDelete.setEnabled(true);
+            this.cmbRefresh.setEnabled(true);
         } else if ("Update".equals(this.cmbAdd.getText())) {
             String sqlKode = "UPDATE anggota SET nama = '" + this.txtNama.getText() + "'," 
                     + " alamat = '" + this.txtAlamat.getText() + "'"
@@ -252,8 +252,8 @@ public class FormKoneksi extends javax.swing.JFrame {
             
             this.cmbAdd.setText("Add");
             this.cmbEdit.setText("Edit");
-            this.cmbDelete.enable(true);
-            this.cmbRefresh.enable(true);
+            this.cmbDelete.setEnabled(true);
+            this.cmbRefresh.setEnabled(true);
         }
     }//GEN-LAST:event_cmbAddActionPerformed
 
@@ -267,13 +267,13 @@ public class FormKoneksi extends javax.swing.JFrame {
         if ("Edit".equals(this.cmbEdit.getText())) {
             this.cmbAdd.setText("Update");
             this.cmbEdit.setText("Cancel");
-            this.cmbDelete.enable(false);
-            this.cmbRefresh.enable(false);
+            this.cmbDelete.setEnabled(false);
+            this.cmbRefresh.setEnabled(false);
         } else if ("Cancel".equals(this.cmbEdit.getText())) {
             this.cmbAdd.setText("Add");
             this.cmbEdit.setText("Edit");
-            this.cmbDelete.enable(false);
-            this.cmbRefresh.enable(false);
+            this.cmbDelete.setEnabled(true);
+            this.cmbRefresh.setEnabled(true);
         }
     }//GEN-LAST:event_cmbEditActionPerformed
 
