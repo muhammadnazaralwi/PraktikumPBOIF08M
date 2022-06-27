@@ -292,11 +292,12 @@ public class FormKoneksi extends javax.swing.JFrame {
     private static Connection bukaKoneksi() {
         if (koneksi==null) {
             try {
-                String url="jdbc:mysql://localhost:3306/belajar"; 
-                String user="root";
-                String password="";
+                String user="praktikumpbo";
+                String password="praktikumpbo340";
+                String url="jdbc:mysql://irfan340.xyz:3306/praktikumpbo"; 
+          
                 
-                DriverManager.registerDriver(new com.mysql.jdbc.Driver()); 
+                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver()); 
                 koneksi = DriverManager.getConnection(url,user,password);
             } catch (SQLException t) {
                 System.out.println("Error membuat koneksi");
@@ -311,7 +312,7 @@ public class FormKoneksi extends javax.swing.JFrame {
         try {
             Connection c = bukaKoneksi();
             Statement s = c.createStatement();
-            String sql = "Select * form anggota";
+            String sql = "Select * from anggota";
             ResultSet r = s.executeQuery(sql);
             
             while (r.next()) {
