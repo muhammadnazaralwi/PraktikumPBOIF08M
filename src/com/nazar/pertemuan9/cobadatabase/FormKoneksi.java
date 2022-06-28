@@ -199,6 +199,14 @@ public class FormKoneksi extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTeleponActionPerformed
 
+    private void backIntoDefaultState() {
+        this.lblKode.setText("0");
+        this.txtNama.setText("");
+        this.txtAlamat.setText("");
+        this.txtTelepon.setText("");
+        this.cmbAdd.setEnabled(true);
+    }
+    
     private void cmbAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAddActionPerformed
         // TODO add your handling code here:
         Connection c = bukaKoneksi();
@@ -206,47 +214,47 @@ public class FormKoneksi extends javax.swing.JFrame {
         if ("Add".equals(this.cmbAdd.getText())) {
             this.cmbAdd.setText("Save");
             this.cmbEdit.setText("Cancel");
-            this.cmbDelete.enable(false);
-            this.cmbRefresh.enable(false);
-            this.lblKode.setText("0");
-            this.txtNama.setText("");
-            this.txtAlamat.setText("");
-            this.txtTelepon.setText("");
+            this.cmbDelete.setEnabled(false);
+            this.cmbRefresh.setEnabled(false);
         } else if ("Save".equals(this.cmbAdd.getText())) {
-            String sqlKode = "Insert into anggota ('nama', 'alamat', 'tlp') " 
+            String sqlKode = "INSERT INTO anggota (nama, alamat, tlp) " 
                     + "values ('" + this.txtNama.getText() + "',"
                     + "'" + this.txtAlamat.getText() + "',"
-                    + "'" + this.txtTelepon.getText() + "')";
+                    + "'" + this.txtTelepon.getText() + "');";
             
             try {
                 PreparedStatement p2 = (PreparedStatement) c.prepareStatement(sqlKode);
                 p2.executeUpdate();
                 p2.close();
+                
+                backIntoDefaultState();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan " + ex.getMessage());
             }
             
             this.cmbAdd.setText("Add");
             this.cmbEdit.setText("Edit");
-            this.cmbDelete.enable(true);
-            this.cmbRefresh.enable(true);
+            this.cmbDelete.setEnabled(true);
+            this.cmbRefresh.setEnabled(true);
         } else if ("Update".equals(this.cmbAdd.getText())) {
-            String sqlKode = "Update anggota SET 'nama'='" + this.txtNama.getText() + "'," 
-                    + " 'alamat'='" + this.txtAlamat.getText() + "' "
-                    + "Where ID='" + this.lblKode.getText() + "'";
+            String sqlKode = "UPDATE anggota SET nama = '" + this.txtNama.getText() + "'," 
+                    + " alamat = '" + this.txtAlamat.getText() + "'"
+                    + " WHERE ID = '" + this.lblKode.getText() + "';";
             
             try {
                 PreparedStatement p2 = (PreparedStatement) c.prepareStatement(sqlKode);
                 p2.executeUpdate();
                 p2.close();
+                
+                backIntoDefaultState();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan " + ex.getMessage());
             }
             
             this.cmbAdd.setText("Add");
             this.cmbEdit.setText("Edit");
-            this.cmbDelete.enable(true);
-            this.cmbRefresh.enable(true);
+            this.cmbDelete.setEnabled(true);
+            this.cmbRefresh.setEnabled(true);
         }
     }//GEN-LAST:event_cmbAddActionPerformed
 
@@ -260,20 +268,21 @@ public class FormKoneksi extends javax.swing.JFrame {
         if ("Edit".equals(this.cmbEdit.getText())) {
             this.cmbAdd.setText("Update");
             this.cmbEdit.setText("Cancel");
-            this.cmbDelete.enable(false);
-            this.cmbRefresh.enable(false);
+            this.cmbAdd.setEnabled(true);
+            this.cmbDelete.setEnabled(false);
+            this.cmbRefresh.setEnabled(false);
         } else if ("Cancel".equals(this.cmbEdit.getText())) {
             this.cmbAdd.setText("Add");
             this.cmbEdit.setText("Edit");
-            this.cmbDelete.enable(false);
-            this.cmbRefresh.enable(false);
+            this.cmbDelete.setEnabled(true);
+            this.cmbRefresh.setEnabled(true);
         }
     }//GEN-LAST:event_cmbEditActionPerformed
 
     private void cmbDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDeleteActionPerformed
         // TODO add your handling code here:
         Connection c = bukaKoneksi();
-        String sqlKode = "Delete from anggota " + "Where ID='" + this.lblKode.getText() + "'";
+        String sqlKode = "DELETE FROM anggota " + "WHERE id = '" + this.lblKode.getText() + "';";
         
         try {
             PreparedStatement p2 = (PreparedStatement) c.prepareStatement(sqlKode);
@@ -287,16 +296,17 @@ public class FormKoneksi extends javax.swing.JFrame {
     private void cmbRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRefreshActionPerformed
         // TODO add your handling code here:
         ambilDataTable();
+        backIntoDefaultState();
     }//GEN-LAST:event_cmbRefreshActionPerformed
 
     private static Connection bukaKoneksi() {
         if (koneksi==null) {
             try {
-                String url="jdbc:mysql://localhost:3306/belajar"; 
-                String user="root";
-                String password="";
+                String url="jdbc:mysql://panel.irfan340.xyz:3306/praktikumpbo"; 
+                String user="praktikumadmin";
+                String password="praktikumadmin340";
                 
-                DriverManager.registerDriver(new com.mysql.jdbc.Driver()); 
+                DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver()); 
                 koneksi = DriverManager.getConnection(url,user,password);
             } catch (SQLException t) {
                 System.out.println("Error membuat koneksi");
@@ -311,7 +321,7 @@ public class FormKoneksi extends javax.swing.JFrame {
         try {
             Connection c = bukaKoneksi();
             Statement s = c.createStatement();
-            String sql = "Select * form anggota";
+            String sql = "SELECT * FROM anggota";
             ResultSet r = s.executeQuery(sql);
             
             while (r.next()) {
@@ -337,12 +347,14 @@ public class FormKoneksi extends javax.swing.JFrame {
         }
         String kode = (String) model.getValueAt(i, 0); 
         this.lblKode.setText(kode);
-        String nama = (String) model.getValueAt(i, 0); 
+        String nama = (String) model.getValueAt(i, 1); 
         this.txtNama.setText(nama);
-        String alamat = (String) model.getValueAt(i, 1); 
+        String alamat = (String) model.getValueAt(i, 2); 
         this.txtAlamat.setText(alamat);
-        String tlp = (String) model.getValueAt(i, 2); 
+        String tlp = (String) model.getValueAt(i, 3); 
         this.txtTelepon.setText(tlp);
+        
+        this.cmbAdd.setEnabled(false);
     }
     
     /**
