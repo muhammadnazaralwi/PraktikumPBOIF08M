@@ -19,7 +19,7 @@ public class DemoStream3 {
         BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Ketik: ");
         data = (char) buff.read();
-        while (data != '\n') {
+        while (data != '\r') {
             str += data;
             data = (char) buff.read();
         }
